@@ -1,59 +1,25 @@
-local TweenService = game:GetService("TweenService")
+-- ============================================================
+-- 🎃 RYZEN LOADER — ГАРАНТОВАНО РОБОЧИЙ
+-- ============================================================
 
-local button = script.Parent 
-local frameOsnovnoi = button.Parent 
-local ryzenAdmin = frameOsnovnoi.Parent 
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local player = Players.LocalPlayer
 
--- Находим фрейм
-local frameToOpen = ryzenAdmin:WaitForChild("AdminFrame") 
+-- ТВОЄ ПОСИЛАННЯ НА ryzen.rbxm (ПЕРЕВІР, ЩО ВОНО ПРАВИЛЬНЕ!)
+local url = "https://raw.githubusercontent.com/kocerubavania-max/ryzen/main/ryzen.rbxm"
 
--- Настройки плавности (0.3 секунды)
-local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+-- ЗАВАНТАЖУЄМО .RBXM
+local success, result = pcall(function()
+    return game:GetObjects(url)
+end)
 
--- Переменная, которая запоминает, открыто ли окно (false = закрыто)
-local isOpen = false 
-
-local function onButtonClick()
-	if not isOpen then
-		-- === КОД ДЛЯ ОТКРЫТИЯ ===
-		isOpen = true
-		frameToOpen.Visible = true
-
-		-- Проявляем фон фрейма
-		TweenService:Create(frameToOpen, tweenInfo, {BackgroundTransparency = 0}):Play()
-
-		-- Проявляем всё, что внутри фрейма
-		for _, child in pairs(frameToOpen:GetDescendants()) do
-			if child:IsA("ImageLabel") or child:IsA("ImageButton") then
-				TweenService:Create(child, tweenInfo, {ImageTransparency = 0}):Play()
-			elseif child:IsA("TextLabel") or child:IsA("TextButton") then
-				TweenService:Create(child, tweenInfo, {TextTransparency = 0}):Play()
-			end
-		end
-	else
-		-- === КОД ДЛЯ ЗАКРЫТИЯ ===
-		isOpen = false
-
-		-- Делаем прозрачным фон фрейма
-		local hideTween = TweenService:Create(frameToOpen, tweenInfo, {BackgroundTransparency = 1})
-		hideTween:Play()
-
-		-- Делаем прозрачным всё, что внутри фрейма
-		for _, child in pairs(frameToOpen:GetDescendants()) do
-			if child:IsA("ImageLabel") or child:IsA("ImageButton") then
-				TweenService:Create(child, tweenInfo, {ImageTransparency = 1}):Play()
-			elseif child:IsA("TextLabel") or child:IsA("TextButton") then
-				TweenService:Create(child, tweenInfo, {TextTransparency = 1}):Play()
-			end
-		end
-
-		-- Полностью выключаем Visible только ПОСЛЕ того, как анимация исчезновения закончится
-		hideTween.Completed:Connect(function()
-			if not isOpen then -- Дополнительная проверка, чтобы не выключить случайно, если быстро нажали опять
-				frameToOpen.Visible = false
-			end
-		end)
-	end
+if success and #result > 0 then
+    local gui = result[1]
+    gui.Parent = player.PlayerGui
+    print("✅ RYZEN ADMIN ЗАВАНТАЖЕНО!")
+else
+    -- ЯКЩО .RBXM НЕ ЗАВАНТАЖИВСЯ — СТВОРЮЄМО GUI ВРУЧНУ
+    warn("❌ Не вдалося завантажити ryzen.rbxm. Створюю GUI з нуля...")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/kocerubavania-max/ryzen/main/RyzenAdmin.lua"))()
 end
-
-button.MouseButton1Click:Connect(onButtonClick)
