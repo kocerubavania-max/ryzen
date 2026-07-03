@@ -1,312 +1,133 @@
--- ============================================================
--- 🎃 RYZEN ADMIN — ПОЛНАЯ КОПИЯ ТВОЕГО ГУИ (РАБОТАЕТ 100%)
--- ============================================================
+local RYZEN_ADMIN = Instance.new("ScreenGui")
+RYZEN_ADMIN.Name = "RYZEN ADMIN"
+RYZEN_ADMIN.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+RYZEN_ADMIN.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
-local player = Players.LocalPlayer
+local AdminFrame = Instance.new("Frame")
+AdminFrame.Name = "AdminFrame"
+AdminFrame.Position = UDim2.new(0.354934, 0, 0.0833333, 0)
+AdminFrame.Size = UDim2.new(0, 199, 0, 237)
+AdminFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+AdminFrame.BorderSizePixel = 0
+AdminFrame.BorderColor3 = Color3.new(0, 0, 0)
+AdminFrame.Visible = false
+AdminFrame.Parent = RYZEN_ADMIN
 
--- ============================================================
--- 1. СОЗДАЁМ ГЛАВНЫЙ ЭКРАН
--- ============================================================
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "RYZENADMIN"
-screenGui.ResetOnSpawn = false
-screenGui.Parent = player.PlayerGui
-screenGui.IgnoreGuiInset = true
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Name = "ScrollingFrame"
+ScrollingFrame.Position = UDim2.new(0, 0, 0.00421941, 0)
+ScrollingFrame.Size = UDim2.new(0, 199, 0, 236)
+ScrollingFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+ScrollingFrame.BorderSizePixel = 0
+ScrollingFrame.BorderColor3 = Color3.new(0, 0, 0)
+ScrollingFrame.Active = true
+ScrollingFrame.ScrollBarImageColor3 = Color3.new(0, 0, 0)
+ScrollingFrame.Parent = AdminFrame
 
--- ============================================================
--- 2. ОСНОВНАЯ ПАНЕЛЬ (osnovnoi)
--- ============================================================
+local UICorner = Instance.new("UICorner")
+UICorner.Name = "UICorner"
+UICorner.CornerRadius = UDim.new(0, 50)
+UICorner.Parent = ScrollingFrame
+
+local UICorner2 = Instance.new("UICorner")
+UICorner2.Name = "UICorner"
+UICorner2.CornerRadius = UDim.new(0, 50)
+UICorner2.Parent = AdminFrame
+
 local osnovnoi = Instance.new("Frame")
 osnovnoi.Name = "osnovnoi"
+osnovnoi.Position = UDim2.new(0.328655, 0, 0, 0)
 osnovnoi.Size = UDim2.new(0, 399, 0, 44)
-osnovnoi.Position = UDim2.new(0.328, 0, 0, 0)
-osnovnoi.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-osnovnoi.BackgroundTransparency = 0
+osnovnoi.BackgroundColor3 = Color3.new(0, 0, 0)
 osnovnoi.BorderSizePixel = 0
-osnovnoi.ClipsDescendants = false
-osnovnoi.Active = true
-osnovnoi.Selectable = true
-osnovnoi.Parent = screenGui
+osnovnoi.BorderColor3 = Color3.new(0, 0, 0)
+osnovnoi.Parent = RYZEN_ADMIN
 
--- Скругление osnovnoi
-local cornerOsnovnoi = Instance.new("UICorner")
-cornerOsnovnoi.CornerRadius = UDim.new(1, 0)
-cornerOsnovnoi.Parent = osnovnoi
+local script = Instance.new("TextButton")
+script.Name = "script"
+script.Position = UDim2.new(0.324129, 0, 0.136364, 0)
+script.Size = UDim2.new(0, 34, 0, 32)
+script.BackgroundColor3 = Color3.new(0.415686, 0.415686, 0.415686)
+script.BorderSizePixel = 0
+script.BorderColor3 = Color3.new(1, 1, 1)
+script.Text = "Скрипт"
+script.TextColor3 = Color3.new(1, 1, 1)
+script.TextSize = 14
+script.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+script.Parent = osnovnoi
 
--- ============================================================
--- 2a. КНОПКА "Настройки" (SettingsFrame)
--- ============================================================
-local settingsFrameBtn = Instance.new("TextButton")
-settingsFrameBtn.Name = "SettingsFrame"
-settingsFrameBtn.Size = UDim2.new(0, 43, 0, 36)
-settingsFrameBtn.Position = UDim2.new(0.864, 0, 0.090, 0)
-settingsFrameBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-settingsFrameBtn.BackgroundTransparency = 0
-settingsFrameBtn.BorderSizePixel = 0
-settingsFrameBtn.Text = "⚙️"
-settingsFrameBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-settingsFrameBtn.TextScaled = true
-settingsFrameBtn.Font = Enum.Font.GothamBold
-settingsFrameBtn.Parent = osnovnoi
+local UICorner3 = Instance.new("UICorner")
+UICorner3.Name = "UICorner"
+UICorner3.CornerRadius = UDim.new(0, 40)
+UICorner3.Parent = script
 
-local cornerSettingsBtn = Instance.new("UICorner")
-cornerSettingsBtn.CornerRadius = UDim.new(0, 40)
-cornerSettingsBtn.Parent = settingsFrameBtn
+local UICorner4 = Instance.new("UICorner")
+UICorner4.Name = "UICorner"
+UICorner4.CornerRadius = UDim.new(1, 0)
+UICorner4.Parent = osnovnoi
 
--- ============================================================
--- 2b. КНОПКА "Открыть админку" (script)
--- ============================================================
-local adminBtn = Instance.new("TextButton")
-adminBtn.Name = "script"
-adminBtn.Size = UDim2.new(0, 34, 0, 32)
-adminBtn.Position = UDim2.new(0.324, 0, 0.136, 0)
-adminBtn.BackgroundColor3 = Color3.fromRGB(106, 106, 106)
-adminBtn.BackgroundTransparency = 0
-adminBtn.BorderSizePixel = 0
-adminBtn.Text = "📋"
-adminBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-adminBtn.TextScaled = true
-adminBtn.Font = Enum.Font.GothamBold
-adminBtn.Parent = osnovnoi
+local ImageLabel = Instance.new("ImageLabel")
+ImageLabel.Name = "ImageLabel"
+ImageLabel.Size = UDim2.new(0, 45, 0, 44)
+ImageLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+ImageLabel.BorderSizePixel = 0
+ImageLabel.BorderColor3 = Color3.new(0, 0, 0)
+ImageLabel.Image = "rbxassetid://74347438788688"
+ImageLabel.Parent = osnovnoi
 
-local cornerAdminBtn = Instance.new("UICorner")
-cornerAdminBtn.CornerRadius = UDim.new(0, 40)
-cornerAdminBtn.Parent = adminBtn
+local UICorner5 = Instance.new("UICorner")
+UICorner5.Name = "UICorner"
+UICorner5.CornerRadius = UDim.new(1, 0)
+UICorner5.Parent = ImageLabel
 
--- ============================================================
--- 2c. ИКОНКА (ImageLabel)
--- ============================================================
-local icon = Instance.new("ImageLabel")
-icon.Name = "ImageLabel"
-icon.Size = UDim2.new(0, 45, 0, 44)
-icon.Position = UDim2.new(0, 0, 0, 0)
-icon.BackgroundTransparency = 0
-icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-icon.Image = "rbxassetid://74347438788688"
-icon.Parent = osnovnoi
+local name = Instance.new("TextLabel")
+name.Name = "name"
+name.Position = UDim2.new(0.138466, 0, 0.136364, 0)
+name.Size = UDim2.new(0, 52, 0, 18)
+name.BackgroundColor3 = Color3.new(0, 0, 0)
+name.BorderSizePixel = 0
+name.BorderColor3 = Color3.new(0, 0, 0)
+name.Text = "Welcome"
+name.TextColor3 = Color3.new(1, 1, 1)
+name.TextSize = 14
+name.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+name.Parent = osnovnoi
 
-local cornerIcon = Instance.new("UICorner")
-cornerIcon.CornerRadius = UDim.new(1, 0)
-cornerIcon.Parent = icon
+local UICorner6 = Instance.new("UICorner")
+UICorner6.Name = "UICorner"
+UICorner6.CornerRadius = UDim.new(0, 50)
+UICorner6.Parent = name
 
--- ============================================================
--- 2d. ТЕКСТ "Welcome" (name)
--- ============================================================
-local welcomeLabel = Instance.new("TextLabel")
-welcomeLabel.Name = "name"
-welcomeLabel.Size = UDim2.new(0, 52, 0, 18)
-welcomeLabel.Position = UDim2.new(0.138, 0, 0.136, 0)
-welcomeLabel.BackgroundTransparency = 0
-welcomeLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-welcomeLabel.BorderSizePixel = 0
-welcomeLabel.Text = "Welcome"
-welcomeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-welcomeLabel.TextScaled = false
-welcomeLabel.TextSize = 14
-welcomeLabel.Font = Enum.Font.SourceSans
-welcomeLabel.Parent = osnovnoi
+local SettingsFrame = Instance.new("TextButton")
+SettingsFrame.Name = "SettingsFrame"
+SettingsFrame.Position = UDim2.new(0.864662, 0, 0.0909091, 0)
+SettingsFrame.Size = UDim2.new(0, 43, 0, 36)
+SettingsFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+SettingsFrame.BorderSizePixel = 0
+SettingsFrame.BorderColor3 = Color3.new(0, 0, 0)
+SettingsFrame.Text = "⚙️"
+SettingsFrame.TextColor3 = Color3.new(0, 0, 0)
+SettingsFrame.TextSize = 14
+SettingsFrame.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+SettingsFrame.Parent = osnovnoi
 
-local cornerWelcome = Instance.new("UICorner")
-cornerWelcome.CornerRadius = UDim.new(0, 50)
-cornerWelcome.Parent = welcomeLabel
+local UICorner7 = Instance.new("UICorner")
+UICorner7.Name = "UICorner"
+UICorner7.CornerRadius = UDim.new(0, 40)
+UICorner7.Parent = SettingsFrame
 
--- ============================================================
--- 3. ФРЕЙМ АДМИНКИ (AdminFrame)
--- ============================================================
-local adminFrame = Instance.new("Frame")
-adminFrame.Name = "AdminFrame"
-adminFrame.Size = UDim2.new(0, 199, 0, 237)
-adminFrame.Position = UDim2.new(0.354, 0, 0.083, 0)
-adminFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-adminFrame.BackgroundTransparency = 0
-adminFrame.BorderSizePixel = 0
-adminFrame.Visible = false
-adminFrame.Parent = screenGui
+local Settings = Instance.new("Frame")
+Settings.Name = "Settings"
+Settings.Position = UDim2.new(0.547815, 0, 0.0745614, 0)
+Settings.Size = UDim2.new(0, 179, 0, 172)
+Settings.BackgroundColor3 = Color3.new(0, 0, 0)
+Settings.BorderSizePixel = 0
+Settings.BorderColor3 = Color3.new(0, 0, 0)
+Settings.Visible = false
+Settings.Parent = RYZEN_ADMIN
 
-local cornerAdmin = Instance.new("UICorner")
-cornerAdmin.CornerRadius = UDim.new(0, 50)
-cornerAdmin.Parent = adminFrame
+local UICorner8 = Instance.new("UICorner")
+UICorner8.Name = "UICorner"
+UICorner8.CornerRadius = UDim.new(0, 40)
+UICorner8.Parent = Settings
 
--- ScrollingFrame внутри AdminFrame
-local scrollFrame = Instance.new("ScrollingFrame")
-scrollFrame.Size = UDim2.new(0, 199, 0, 236)
-scrollFrame.Position = UDim2.new(0, 0, 0.004, 0)
-scrollFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-scrollFrame.BackgroundTransparency = 0
-scrollFrame.BorderSizePixel = 0
-scrollFrame.ClipsDescendants = true
-scrollFrame.ScrollBarThickness = 12
-scrollFrame.CanvasSize = UDim2.new(0, 0, 2, 0)
-scrollFrame.Parent = adminFrame
-
-local cornerScroll = Instance.new("UICorner")
-cornerScroll.CornerRadius = UDim.new(0, 50)
-cornerScroll.Parent = scrollFrame
-
--- (Сюда можно добавить кнопки команд в ScrollingFrame)
-
--- ============================================================
--- 4. ФРЕЙМ НАСТРОЕК (Settings)
--- ============================================================
-local settingsFrame = Instance.new("Frame")
-settingsFrame.Name = "Settings"
-settingsFrame.Size = UDim2.new(0, 179, 0, 172)
-settingsFrame.Position = UDim2.new(0.547, 0, 0.074, 0)
-settingsFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-settingsFrame.BackgroundTransparency = 0
-settingsFrame.BorderSizePixel = 0
-settingsFrame.Visible = false
-settingsFrame.Parent = screenGui
-
-local cornerSettings = Instance.new("UICorner")
-cornerSettings.CornerRadius = UDim.new(0, 40)
-cornerSettings.Parent = settingsFrame
-
--- ============================================================
--- 5. СКРИПТЫ (ЛОГИКА)
--- ============================================================
-
--- === 5.1. ПРИВЕТСТВИЕ (анимация Welcome → ник) ===
-task.spawn(function()
-    welcomeLabel.TextTransparency = 1
-    welcomeLabel.Text = "Welcome"
-    local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-    local fadeIn = TweenService:Create(welcomeLabel, tweenInfo, {TextTransparency = 0})
-    fadeIn:Play()
-    fadeIn.Completed:Wait()
-    task.wait(0.5)
-    local fadeOut = TweenService:Create(welcomeLabel, tweenInfo, {TextTransparency = 1})
-    fadeOut:Play()
-    fadeOut.Completed:Wait()
-    welcomeLabel.Text = player.DisplayName or player.Name
-    local fadeInNick = TweenService:Create(welcomeLabel, tweenInfo, {TextTransparency = 0})
-    fadeInNick:Play()
-end)
-
--- === 5.2. ОТКРЫТИЕ/ЗАКРЫТИЕ AdminFrame ===
-local adminOpen = false
-local tweenInfoAdmin = TweenInfo.new(0.3, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-
-adminBtn.MouseButton1Click:Connect(function()
-    adminOpen = not adminOpen
-    if adminOpen then
-        adminFrame.Visible = true
-        adminFrame.BackgroundTransparency = 1
-        for _, child in pairs(adminFrame:GetDescendants()) do
-            if child:IsA("ImageLabel") or child:IsA("ImageButton") then
-                child.ImageTransparency = 1
-            elseif child:IsA("TextLabel") or child:IsA("TextButton") then
-                child.TextTransparency = 1
-            end
-        end
-        TweenService:Create(adminFrame, tweenInfoAdmin, {BackgroundTransparency = 0}):Play()
-        for _, child in pairs(adminFrame:GetDescendants()) do
-            if child:IsA("ImageLabel") or child:IsA("ImageButton") then
-                TweenService:Create(child, tweenInfoAdmin, {ImageTransparency = 0}):Play()
-            elseif child:IsA("TextLabel") or child:IsA("TextButton") then
-                TweenService:Create(child, tweenInfoAdmin, {TextTransparency = 0}):Play()
-            end
-        end
-    else
-        local closeTween = TweenService:Create(adminFrame, tweenInfoAdmin, {BackgroundTransparency = 1})
-        closeTween:Play()
-        for _, child in pairs(adminFrame:GetDescendants()) do
-            if child:IsA("ImageLabel") or child:IsA("ImageButton") then
-                TweenService:Create(child, tweenInfoAdmin, {ImageTransparency = 1}):Play()
-            elseif child:IsA("TextLabel") or child:IsA("TextButton") then
-                TweenService:Create(child, tweenInfoAdmin, {TextTransparency = 1}):Play()
-            end
-        end
-        closeTween.Completed:Wait()
-        if not adminOpen then
-            adminFrame.Visible = false
-        end
-    end
-end)
-
--- === 5.3. ОТКРЫТИЕ/ЗАКРЫТИЕ Settings ===
-local settingsOpen = false
-local tweenInfoSettings = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-
-settingsFrameBtn.MouseButton1Click:Connect(function()
-    settingsOpen = not settingsOpen
-    if settingsOpen then
-        settingsFrame.Visible = true
-        settingsFrame.Size = UDim2.new(0, 0, 0, 0)
-        local openTween = TweenService:Create(settingsFrame, tweenInfoSettings, {Size = UDim2.new(0, 179, 0, 172)})
-        openTween:Play()
-    else
-        local closeTween = TweenService:Create(settingsFrame, tweenInfoSettings, {Size = UDim2.new(0, 0, 0, 0)})
-        closeTween:Play()
-        closeTween.Completed:Wait()
-        if not settingsOpen then
-            settingsFrame.Visible = false
-        end
-    end
-end)
-
--- === 5.4. ПЕРЕТЯГИВАНИЕ (Drag) ===
-local dragging = false
-local dragStart = nil
-local startPos = nil
-local startAdminPos = nil
-local startSettingsPos = nil
-local initialYScale = 0
-
-osnovnoi.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = osnovnoi.Position
-        if not initialYScale then initialYScale = startPos.Y.Scale end
-        startAdminPos = adminFrame.Position
-        startSettingsPos = settingsFrame.Position
-        local connection
-        connection = UserInputService.InputEnded:Connect(function(endInput)
-            if endInput.UserInputType == Enum.UserInputType.MouseButton1 or endInput.UserInputType == Enum.UserInputType.Touch then
-                dragging = false
-                connection:Disconnect()
-            end
-        end)
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-        local screenSize = screenGui.AbsoluteSize
-        if screenSize.X == 0 or screenSize.Y == 0 then return end
-        local delta = input.Position - dragStart
-        local deltaXScale = delta.X / screenSize.X
-        local deltaYScale = delta.Y / screenSize.Y
-        local newYScale = startPos.Y.Scale + deltaYScale
-        local minY = 0.0
-        local maxY = initialYScale + 0.02
-        local clampedY = math.clamp(newYScale, minY, maxY)
-        local newXScale = startPos.X.Scale + deltaXScale
-        local clampedX = math.clamp(newXScale, 0.0, 1.0 - osnovnoi.Size.X.Scale)
-        osnovnoi.Position = UDim2.new(clampedX, osnovnoi.Position.X.Offset, clampedY, osnovnoi.Position.Y.Offset)
-        local realDeltaX = clampedX - startPos.X.Scale
-        local realDeltaY = clampedY - startPos.Y.Scale
-        if adminFrame and startAdminPos then
-            adminFrame.Position = UDim2.new(
-                startAdminPos.X.Scale + realDeltaX,
-                adminFrame.Position.X.Offset,
-                startAdminPos.Y.Scale + realDeltaY,
-                adminFrame.Position.Y.Offset
-            )
-        end
-        if settingsFrame and startSettingsPos then
-            settingsFrame.Position = UDim2.new(
-                startSettingsPos.X.Scale + realDeltaX,
-                settingsFrame.Position.X.Offset,
-                startSettingsPos.Y.Scale + realDeltaY,
-                settingsFrame.Position.Y.Offset
-            )
-        end
-    end
-end)
-
-print("✅ RYZEN ADMIN УСПЕШНО ЗАГРУЖЕН! НАЖМИ 🎃 (на самом деле кнопки уже есть)")
