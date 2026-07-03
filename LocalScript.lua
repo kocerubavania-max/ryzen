@@ -1,21 +1,18 @@
-local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
-
 local localPlayer = Players.LocalPlayer
-local url = "https://ryzen-admin-default-rtdb.europe-west1.firebasedatabase.app/Users/" .. localPlayer.Name .. ".json"
 
 -- ====================================================================
--- 1. СТВОРЕННЯ ГУІ (Повна структура з твого скріншоту 1 в 1)
+-- 1. СТВОРЕННЯ ПОВНОЇ ІЄРАРХІЇ ГУІ (Точно за твоїм Explorer)
 -- ====================================================================
 
+-- Головний ScreenGui [RYZEN ADMIN]
 local RYZEN_ADMIN = Instance.new("ScreenGui")
 RYZEN_ADMIN.Name = "RYZEN ADMIN"
 RYZEN_ADMIN.ResetOnSpawn = false
+RYZEN_ADMIN.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 RYZEN_ADMIN.Parent = localPlayer:WaitForChild("PlayerGui")
 
--- AdminFrame
+-- ─── [1] AdminFrame ───
 local AdminFrame = Instance.new("Frame")
 AdminFrame.Name = "AdminFrame"
 AdminFrame.Size = UDim2.new(0, 420, 0, 45)
@@ -24,114 +21,147 @@ AdminFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 AdminFrame.BackgroundTransparency = 0.1
 AdminFrame.Parent = RYZEN_ADMIN
 
-local AdminCorner = Instance.new("UICorner")
-AdminCorner.CornerRadius = UDim.new(1, 0)
-AdminCorner.Parent = AdminFrame
+local AdminFrame_UICorner = Instance.new("UICorner")
+AdminFrame_UICorner.CornerRadius = UDim.new(1, 0) -- Повністю кругла видовжена панель
+AdminFrame_UICorner.Parent = AdminFrame
 
--- ScrollingFrame всередині AdminFrame
+-- ─── [2] ScrollingFrame (Всередині AdminFrame) ───
 local ScrollingFrame = Instance.new("ScrollingFrame")
 ScrollingFrame.Name = "ScrollingFrame"
-ScrollingFrame.Size = UDim2.new(1, -10, 1, -10)
-ScrollingFrame.Position = UDim2.new(0, 5, 0, 5)
+ScrollingFrame.Size = UDim2.new(1, -70, 1, -10)
+ScrollingFrame.Position = UDim2.new(0, 45, 0, 5)
 ScrollingFrame.BackgroundTransparency = 1
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.ScrollBarThickness = 0
 ScrollingFrame.Parent = AdminFrame
 
--- Settings (Кнопка-Шестерня)
-local Settings = Instance.new("ImageButton")
+-- ─── [3] Settings (Фрейм кнопки налаштувань) ───
+local Settings = Instance.new("Frame")
 Settings.Name = "Settings"
-Settings.Size = UDim2.new(0, 25, 0, 25)
-Settings.Position = UDim2.new(1, -35, 0.5, -12)
-Settings.BackgroundTransparency = 1
-Settings.Image = "rbxassetid://7072718840"
+Settings.Size = UDim2.new(0, 35, 0, 35)
+Settings.Position = UDim2.new(1, -40, 0.5, -17)
+Settings.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Settings.BackgroundTransparency = 0.5
 Settings.Parent = AdminFrame
 
-local SettingsCorner = Instance.new("UICorner")
-SettingsCorner.CornerRadius = UDim.new(1, 0)
-SettingsCorner.Parent = Settings
+local Settings_UICorner = Instance.new("UICorner")
+Settings_UICorner.CornerRadius = UDim.new(1, 0) -- Кругла кнопка
+Settings_UICorner.Parent = Settings
 
--- Фрейм "osnovnoi"
+-- Іконка шестерні всередині Settings
+local SettingsIcon = Instance.new("ImageButton")
+SettingsIcon.Name = "SettingsIcon"
+SettingsIcon.Size = UDim2.new(0, 20, 0, 20)
+SettingsIcon.Position = UDim2.new(0.5, -10, 0.5, -10)
+SettingsIcon.BackgroundTransparency = 1
+SettingsIcon.Image = "rbxassetid://7072718840"
+SettingsIcon.Parent = Settings
+
+-- ─── [4] osnovnoi (Фрейм ліворуч) ───
 local osnovnoi = Instance.new("Frame")
 osnovnoi.Name = "osnovnoi"
 osnovnoi.Size = UDim2.new(0, 140, 0, 35)
-osnovnoi.Position = UDim2.new(0, 45, 0.5, -17)
+osnovnoi.Position = UDim2.new(0, 5, 0.5, -17)
 osnovnoi.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 osnovnoi.BackgroundTransparency = 0.3
-osnovnoi.Parent = AdminFrame
+osnovnoi.Parent = ScrollingFrame
 
-local OsnovnoiCorner = Instance.new("UICorner")
-OsnovnoiCorner.CornerRadius = UDim.new(0, 8)
-OsnovnoiCorner.Parent = osnovnoi
+local osnovnoi_UICorner = Instance.new("UICorner")
+osnovnoi_UICorner.CornerRadius = UDim.new(0, 8)
+osnovnoi_UICorner.Parent = osnovnoi
 
--- Картинка RYZEN (ImageLabel всередині AdminFrame)
+-- Логотип RYZEN всередині osnovnoi
 local ImageLabel = Instance.new("ImageLabel")
 ImageLabel.Name = "ImageLabel"
-ImageLabel.Size = UDim2.new(0, 35, 0, 35)
-ImageLabel.Position = UDim2.new(0, 5, 0.5, -17)
+ImageLabel.Size = UDim2.new(0, 25, 0, 25)
+ImageLabel.Position = UDim2.new(0, 5, 0.5, -12)
 ImageLabel.BackgroundTransparency = 1
-ImageLabel.Image = "rbxassetid://18917822456" 
-ImageLabel.Parent = AdminFrame
+ImageLabel.Image = "rbxassetid://18917822456" -- Твій ID логотипу RYZEN
+ImageLabel.Parent = osnovnoi
 
--- SettingsFrame
+-- Текст Welcome / Нік
+local WelcomeLabel = Instance.new("TextLabel")
+WelcomeLabel.Name = "WelcomeLabel"
+WelcomeLabel.Size = UDim2.new(1, -40, 1, 0)
+WelcomeLabel.Position = UDim2.new(0, 35, 0, 0)
+WelcomeLabel.BackgroundTransparency = 1
+WelcomeLabel.Text = "Welcome!"
+WelcomeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+WelcomeLabel.TextSize = 12
+WelcomeLabel.Font = Enum.Font.SourceSansBold
+WelcomeLabel.TextXAlignment = Enum.TextXAlignment.Left
+WelcomeLabel.Parent = osnovnoi
+
+-- ─── [5] SettingsFrame (Фрейм по центру) ───
 local SettingsFrame = Instance.new("Frame")
 SettingsFrame.Name = "SettingsFrame"
-SettingsFrame.Size = UDim2.new(0, 150, 0, 35)
-SettingsFrame.Position = UDim2.new(0, 195, 0.5, -17)
+SettingsFrame.Size = UDim2.new(0, 160, 0, 35)
+SettingsFrame.Position = UDim2.new(0, 150, 0.5, -17)
 SettingsFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 SettingsFrame.BackgroundTransparency = 0.3
-SettingsFrame.Parent = AdminFrame
+SettingsFrame.Parent = ScrollingFrame
 
-local SettingsFrameCorner = Instance.new("UICorner")
-SettingsFrameCorner.CornerRadius = UDim.new(0, 8)
-SettingsFrameCorner.Parent = SettingsFrame
+local SettingsFrame_UICorner = Instance.new("UICorner")
+SettingsFrame_UICorner.CornerRadius = UDim.new(0, 8)
+SettingsFrame_UICorner.Parent = SettingsFrame
 
--- Текст імені (name)
-local name = Instance.new("TextLabel")
-name.Name = "name"
-name.Size = UDim2.new(1, -10, 0.5, 0)
-name.Position = UDim2.new(0, 5, 0, 2)
-name.BackgroundTransparency = 1
-name.Text = "Welcome, @" .. localPlayer.Name
-name.TextColor3 = Color3.fromRGB(255, 255, 255)
-name.TextSize = 13
-name.Font = Enum.Font.SourceSansBold
-name.TextXAlignment = Enum.TextXAlignment.Left
-name.Parent = SettingsFrame
+-- ─── [6] script (Фрейм-контейнер для виведення ролі/дискорду) ───
+local scriptFrame = Instance.new("Frame")
+scriptFrame.Name = "script"
+scriptFrame.Size = UDim2.new(1, -10, 1, -10)
+scriptFrame.Position = UDim2.new(0, 5, 0, 5)
+scriptFrame.BackgroundTransparency = 1
+scriptFrame.Parent = SettingsFrame
 
--- Текст для виведення Дискорду та Ролі (буде оновлюватись скриптом)
-local RoleLabel = Instance.new("TextLabel")
-RoleLabel.Name = "RoleLabel"
-RoleLabel.Size = UDim2.new(1, -10, 0.5, 0)
-RoleLabel.Position = UDim2.new(0, 5, 0.5, -2)
-RoleLabel.BackgroundTransparency = 1
-RoleLabel.Text = "Role: Loading..."
-RoleLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-RoleLabel.TextSize = 11
-RoleLabel.Font = Enum.Font.SourceSans
-RoleLabel.TextXAlignment = Enum.TextXAlignment.Left
-RoleLabel.Parent = SettingsFrame
+local scriptFrame_UICorner = Instance.new("UICorner")
+scriptFrame_UICorner.CornerRadius = UDim.new(0, 6)
+scriptFrame_UICorner.Parent = scriptFrame
+
+-- ─── [7] name (Текстовий блок для відображення даних) ───
+local nameFrame = Instance.new("Frame")
+nameFrame.Name = "name"
+nameFrame.Size = UDim2.new(1, 0, 1, 0)
+nameFrame.BackgroundTransparency = 1
+nameFrame.Parent = scriptFrame
+
+local nameFrame_UICorner = Instance.new("UICorner")
+nameFrame_UICorner.CornerRadius = UDim.new(0, 4)
+nameFrame_UICorner.Parent = nameFrame
+
+-- Текст імені/ролі (name)
+local nameLabel = Instance.new("TextLabel")
+nameLabel.Name = "name"
+nameLabel.Size = UDim2.new(1, 0, 1, 0)
+nameLabel.BackgroundTransparency = 1
+nameLabel.Text = "@" .. localPlayer.Name
+nameLabel.TextColor3 = Color3.fromRGB(230, 230, 230)
+nameLabel.TextSize = 13
+nameLabel.Font = Enum.Font.SourceSansBold
+nameLabel.TextXAlignment = Enum.TextXAlignment.Center
+nameLabel.Parent = nameFrame
 
 
 -- ====================================================================
--- 2. СКРИПТИ (Всі твої внутрішні скрипти перенесені сюди)
+-- 2. ІНТЕГРАЦІЯ НАШИХ СКРИПТІВ (Твої оригінальні скрипти)
 -- ====================================================================
 
--- [1] DragScript — Логіка перетягування панелі мишкою/пальцем
+-- ─── Скрипт [DragScript] ───
+-- (Логіка перетягування всієї панелі по екрану)
 task.spawn(function()
+	local UserInputService = game:GetService("UserInputService")
 	local dragging, dragInput, dragStart, startPos
-	
+
 	local function update(input)
 		local delta = input.Position - dragStart
 		AdminFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 	end
-	
+
 	AdminFrame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
 			startPos = AdminFrame.Position
-			
+
 			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
 					dragging = false
@@ -139,13 +169,13 @@ task.spawn(function()
 			end)
 		end
 	end)
-	
+
 	AdminFrame.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
 	end)
-	
+
 	UserInputService.InputChanged:Connect(function(input)
 		if input == dragInput and dragging then
 			update(input)
@@ -154,58 +184,39 @@ task.spawn(function()
 end)
 
 
--- [2] Твій оригінальний скрипт "setemd" (Логіка взаємодії з кнопками/панеллю)
+-- ─── Скрипт [setemd] ───
+-- (Сюди ти вставляєш чистий код свого скрипта setemd)
 task.spawn(function()
-	-- Сюди ти можеш вставити чистий код, який був у твоєму скрипті "setemd"
-	-- Зараз він налаштований на зчитування бази Firebase
-	local function checkFirebase()
-		local success, result = pcall(function()
-			return game:HttpGet(url)
-		end)
-		
-		if success and result and result ~= "null" then
-			local data = HttpService:JSONDecode(result)
-			RoleLabel.Text = "Role: " .. (data.HighestRole or "Player")
-			
-			if data.HighestRole == "Owner" or data.HighestRole == "Создатель" or data.HighestRole == "Admin" then
-				RoleLabel.TextColor3 = Color3.fromRGB(255, 215, 0) -- Золотий для адмінів
-			end
-		else
-			RoleLabel.Text = "Role: Player"
-		end
-	end
+	print("[RYZEN]: Скрипт 'setemd' успішно ініціалізовано!")
 	
-	checkFirebase()
+	-- Твій код з setemd пиши нижче:
+	
 end)
 
 
--- [3] Твій оригінальний "LocalScript" (Керування анімацією та кліками)
+-- ─── Скрипт [LocalScript] (Кліки та Керування кнопками) ───
+-- (Логіка взаємодії з кнопкою Settings)
 task.spawn(function()
-	Settings.MouseButton1Click:Connect(function()
-		-- Красива анімація обертання шестерні при натисканні
-		Settings.Rotation = 0
-		local tween = TweenService:Create(Settings, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 180})
+	SettingsIcon.MouseButton1Click:Connect(function()
+		-- Ефектне прокручування шестерні при натисканні
+		local TweenService = game:GetService("TweenService")
+		SettingsIcon.Rotation = 0
+		local tween = TweenService:Create(SettingsIcon, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 180})
 		tween:Play()
 		
-		-- Додаткова логіка: оновлення даних при кліку
-		local success, result = pcall(function() return game:HttpGet(url) end)
-		if success and result and result ~= "null" then
-			local data = HttpService:JSONDecode(result)
-			print("Синхронізовано! Твій Discord: " .. tostring(data.DiscordName))
-		end
+		print("[RYZEN]: Натиснуто кнопку налаштувань!")
+		
+		-- Твій код з оригінального LocalScript пиши нижче:
+		
 	end)
 end)
 
 
--- [4] Твій скрипт "script" (Автоматичне фонове оновлення бази кожні 15 секунд)
+-- ─── Скрипт [script] ───
+-- (Сюди вставляється код твоєї логіки або перевірок)
 task.spawn(function()
-	while task.wait(15) do
-		local success, result = pcall(function()
-			return game:HttpGet(url)
-		end)
-		if success and result and result ~= "null" then
-			local data = HttpService:JSONDecode(result)
-			RoleLabel.Text = "Role: " .. (data.HighestRole or "Player")
-		end
-	end
+	print("[RYZEN]: Внутрішній системний скрипт запущено!")
+	
+	-- Твій код з оригінального скрипта пиши нижче:
+	
 end)
