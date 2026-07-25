@@ -510,17 +510,6 @@ do
     lglow.Parent           = lf
     corner(lglow, 2)
 
-    local llogo = Instance.new("TextLabel")
-    llogo.Size               = UDim2.new(1, 0, 0, 60)
-    llogo.Position           = UDim2.new(0, 0, 0.30, 0)
-    llogo.BackgroundTransparency = 1
-    llogo.Text               = "Seluwia.xyz"
-    llogo.TextColor3         = C.accent
-    llogo.TextSize           = 42
-    llogo.Font               = Enum.Font.GothamBold
-    llogo.ZIndex             = 101
-    llogo.Parent             = lf
-
     local lsub = Instance.new("TextLabel")
     lsub.Size               = UDim2.new(1, 0, 0, 22)
     lsub.Position           = UDim2.new(0, 0, 0.30, 64)
