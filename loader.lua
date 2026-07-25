@@ -552,13 +552,13 @@ do
     pbg.BackgroundColor3 = C.surfaceHi
     pbg.BorderSizePixel  = 0
     pbg.ZIndex           = 101
-    pbg.Visible          = false
+    pbg.Visible          = true
     pbg.Parent           = lf
     corner(pbg, 2)
 
     local function startLoading()
         kf.Visible = false
-        pbg.Visible = true; lstat.Visible = true
+        pbg.Visible = true; lstat.Visible = false
         for _, d in ipairs(dots) do d.Visible = true end
         local _e,_ls,_f = 0,0,false
         local SD, T = 0.5, 3.3
